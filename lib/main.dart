@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
+import 'common/show_model.dart';
 
 void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(),
+      theme: ThemeData(
+        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+      ),
       home: const HomePage(),
     ),
   );
@@ -44,7 +47,11 @@ class HomePage extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(CupertinoIcons.calendar),
           ),
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.bell)),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(CupertinoIcons.bell),
+            color: Colors.black,
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -89,7 +96,7 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           context: context,
-                          builder: (context) => Container(),
+                          builder: (context) => AddNewTaskModel(),
                         ),
                     child: const Text('+ New Task'),
                   ),
