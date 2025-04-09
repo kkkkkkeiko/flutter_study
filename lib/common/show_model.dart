@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -43,21 +44,62 @@ class AddNewTaskModel extends StatelessWidget {
           const TextFieldWidget(maxLine: 3, hintText: 'Add Descriptions'),
           const Gap(12),
           const Text('Category', style: AppStyle.headingOne),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: RadioWidget(
+                    categColor: Colors.green,
+                    titleRadio: 'LRN',
+                  ),
+                ),
+                Expanded(
+                  child: RadioWidget(
+                    categColor: Colors.blue.shade700,
+                    titleRadio: 'WRK',
+                  ),
+                ),
+                Expanded(
+                  child: RadioWidget(
+                    categColor: Colors.amberAccent.shade700,
+                    titleRadio: 'GEN',
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Date and Time Selection
           Row(
             children: [
-              Expanded(
-                child: RadioWidget(categColor: Colors.green, titleRadio: 'LRN'),
-              ),
-              Expanded(
-                child: RadioWidget(
-                  categColor: Colors.blue.shade700,
-                  titleRadio: 'WRK',
-                ),
-              ),
-              Expanded(
-                child: RadioWidget(
-                  categColor: Colors.amberAccent.shade700,
-                  titleRadio: 'GEN',
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Date', style: AppStyle.headingOne),
+                    const Gap(6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: const [
+                          Icon(CupertinoIcons.calendar),
+                          Gap(12),
+                          Text('dd/mm/yy'),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -12,23 +12,19 @@ class RadioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Theme(
-        data: ThemeData(unselectedWidgetColor: categColor),
-        child: RadioListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Transform.translate(
-            offset: Offset(-22, 0),
-            child: Text(
-              titleRadio,
-              style: TextStyle(color: categColor, fontWeight: FontWeight.w700),
-            ),
-          ),
-          value: 1,
-          groupValue: 0,
-          onChanged: (value) {},
+    return RadioListTile(
+      contentPadding: EdgeInsets.zero,
+      fillColor: WidgetStateProperty.all(categColor),
+      title: Transform.translate(
+        offset: Offset(-22, 0),
+        child: Text(
+          titleRadio,
+          style: TextStyle(color: categColor, fontWeight: FontWeight.w700),
         ),
       ),
+      value: 1,
+      groupValue: 0,
+      onChanged: (value) {},
     );
   }
 }
