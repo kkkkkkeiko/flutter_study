@@ -1,10 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/firebase_options.dart';
+import 'package:flutter_study/widget/card_todo_widget.dart';
 import 'package:gap/gap.dart';
 import 'common/show_model.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ProviderScope(
       child: MaterialApp(
@@ -107,50 +112,11 @@ class HomePage extends StatelessWidget {
               ),
               const Gap(20),
               //Card list task
-              Container(
-                width: double.infinity,
-                height: 130,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          bottomLeft: Radius.circular(12),
-                        ),
-                      ),
-                      width: 20,
-                    ),
-                    //const Gap(12),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: const Text('Learinign Web Dverloper'),
-                              subtitle: Text('Learning topic HTML and CSS'),
-                              trailing: Transform.scale(
-                                scale: 1.5,
-                                child: Checkbox(
-                                  activeColor: Colors.blue.shade700,
-                                  shape: const CircleBorder(),
-                                  value: true,
-                                  onChanged: (value) => print(value),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              ListView.builder(
+                itemCount: 4,
+                shrinkWrap: true,
+                itemBuilder:
+                    (context, index) => Expanded(child: CardToDoListWidget()),
               ),
             ],
           ),
