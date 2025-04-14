@@ -62,65 +62,56 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        children: [
+          const Gap(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Gap(20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Today\'s Task',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        'Monday, 12 September',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFD5E8FA),
-                      foregroundColor: Colors.blue.shade800,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                  Text(
+                    'Today\'s Task',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    onPressed:
-                        () => showModalBottomSheet(
-                          isScrollControlled: true,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          context: context,
-                          builder: (context) => AddNewTaskModel(),
-                        ),
-                    child: const Text('+ New Task'),
+                  ),
+                  Text(
+                    'Monday, 12 September',
+                    style: TextStyle(color: Colors.grey),
                   ),
                 ],
               ),
-              const Gap(20),
-              //Card list task
-              ListView.builder(
-                itemCount: 4,
-                shrinkWrap: true,
-                itemBuilder:
-                    (context, index) => Expanded(child: CardToDoListWidget()),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD5E8FA),
+                  foregroundColor: Colors.blue.shade800,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed:
+                    () => showModalBottomSheet(
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      context: context,
+                      builder: (context) => AddNewTaskModel(),
+                    ),
+                child: const Text('+ New Task'),
               ),
             ],
           ),
-        ),
+          const Gap(20),
+          //Card list task
+          for (int i = 0; i < 100; i++) CardToDoListWidget(),
+        ],
       ),
     );
   }
