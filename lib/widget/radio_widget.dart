@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/provider/radio_provider.dart';
 
-class RadioWidget extends StatelessWidget {
+class RadioWidget extends ConsumerWidget {
   const RadioWidget({
     super.key,
     required this.categColor,
     required this.titleRadio,
+    required this.valueInput,
+    required this.onChangeValue,
   });
 
   final String titleRadio;
   final Color categColor;
+  final int valueInput;
+  final VoidCallback onChangeValue;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final radio = ref.watch(radioProvider);
     return RadioListTile(
+      activeColor: categColor,
       contentPadding: EdgeInsets.zero,
       fillColor: WidgetStateProperty.all(categColor),
       title: Transform.translate(
@@ -22,9 +30,9 @@ class RadioWidget extends StatelessWidget {
           style: TextStyle(color: categColor, fontWeight: FontWeight.w700),
         ),
       ),
-      value: 1,
-      groupValue: 0,
-      onChanged: (value) {},
+      value: valueInput,
+      groupValue: radio,
+      onChanged: (value) => onChangeValue(),
     );
   }
 }
