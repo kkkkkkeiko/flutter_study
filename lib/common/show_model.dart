@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/model/todo_model.dart';
 import 'package:flutter_study/provider/date_time_provider.dart';
 import 'package:flutter_study/provider/radio_provider.dart';
+import 'package:flutter_study/provider/service_provider.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
@@ -12,10 +14,16 @@ import '../widget/radio_widget.dart';
 import '../widget/textfield_widget.dart';
 
 class AddNewTaskModel extends ConsumerWidget {
-  const AddNewTaskModel({super.key});
+  AddNewTaskModel({super.key})
+    : titleController = TextEditingController(),
+      descriptionController = TextEditingController();
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('AddNewTaskModel');
+
     final radioCategory = ref.watch(radioProvider);
     final dateProv = ref.watch(dateProvider);
 
@@ -45,11 +53,19 @@ class AddNewTaskModel extends ConsumerWidget {
           const Gap(12),
           const Text('Title Task', style: AppStyle.headingOne),
           const Gap(6),
-          const TextFieldWidget(maxLine: 1, hintText: 'Add Task name.'),
+          TextFieldWidget(
+            maxLine: 1,
+            hintText: 'Add Task name.',
+            txtController: titleController,
+          ),
           const Gap(12),
           const Text('Description', style: AppStyle.headingOne),
           const Gap(6),
-          const TextFieldWidget(maxLine: 3, hintText: 'Add Descriptions'),
+          TextFieldWidget(
+            maxLine: 3,
+            hintText: 'Add Descriptions',
+            txtController: descriptionController,
+          ),
           const Gap(12),
           const Text('Category', style: AppStyle.headingOne),
           Container(
@@ -174,7 +190,45 @@ class AddNewTaskModel extends ConsumerWidget {
                     side: BorderSide(color: Colors.blue.shade700),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    final getRadioValue = ref.read(radioProvider);
+                    String category = '';
+
+                    switch (getRadioValue) {
+                      case 1:
+                        category = 'Learning';
+                        break;
+                      case 2:
+                        category = 'Work';
+                        break;
+                      case 3:
+                        category = 'General';
+                        break;
+                      default:
+                    }
+
+                    ref
+                        .read(serviceProvider)
+                        .addNewTask(
+                          TodoModel(
+                            titleTask: titleController.text,
+                            description: descriptionController.text,
+                            category: category,
+                            dateTask: ref.read(dateProvider),
+                            timeTask: ref.read(timeProvider),
+                          ),
+                        );
+                    print('Data is saving');
+
+                    titleController.clear();
+                    descriptionController.clear();
+                    ref.read(radioProvider.notifier).update((state) => 0);
+                    ref.read(dateProvider.notifier).update((state) => '');
+                    ref.read(timeProvider.notifier).update((state) => '');
+                    print('Data is clear');
+                    // Close the modal
+                    Navigator.pop(context);
+                  },
                   child: Text('Create'),
                 ),
               ),
