@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/model/radio_type.dart';
 import 'package:flutter_study/provider/service_provider.dart';
 import 'package:gap/gap.dart';
 
@@ -25,7 +27,7 @@ class CardToDoListWidget extends ConsumerWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: .getColor(), //Colors.green,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       bottomLeft: Radius.circular(12),
@@ -43,15 +45,46 @@ class CardToDoListWidget extends ConsumerWidget {
                       children: [
                         ListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: Text(todoData[getIndex].titleTask),
-                          subtitle: Text(todoData[getIndex].description),
+                          leading: IconButton(
+                            icon: Icon(CupertinoIcons.delete),
+                            onPressed:
+                                () => ref
+                                    .read(serviceProvider)
+                                    .deleteTask(todoData[getIndex].docID),
+                          ),
+                          title: Text(
+                            todoData[getIndex].titleTask,
+                            maxLines: 1,
+                            style: TextStyle(
+                              decoration:
+                                  todoData[getIndex].isDone
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                            ),
+                          ),
+                          subtitle: Text(
+                            todoData[getIndex].description,
+                            maxLines: 1,
+                            style: TextStyle(
+                              decoration:
+                                  todoData[getIndex].isDone
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                            ),
+                          ),
                           trailing: Transform.scale(
                             scale: 1.5,
                             child: Checkbox(
                               activeColor: Colors.blue.shade700,
                               shape: const CircleBorder(),
                               value: todoData[getIndex].isDone,
-                              onChanged: (value) => print(value),
+                              onChanged:
+                                  (value) => ref
+                                      .read(serviceProvider)
+                                      .updateTask(
+                                        todoData[getIndex].docID,
+                                        value!, //????????????? !いるの？いらんの？
+                                      ),
                             ),
                           ),
                         ),
