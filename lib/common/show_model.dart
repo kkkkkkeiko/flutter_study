@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/model/radio_type.dart';
 import 'package:flutter_study/model/todo_model.dart';
 import 'package:flutter_study/provider/date_time_provider.dart';
 import 'package:flutter_study/provider/radio_provider.dart';
@@ -75,39 +76,18 @@ class AddNewTaskModel extends ConsumerWidget {
             ),
             child: Row(
               children: [
-                Expanded(
-                  child: RadioWidget(
-                    categColor: Colors.green,
-                    titleRadio: 'LRN',
-                    valueInput: 1,
-                    onChangeValue:
-                        () => ref
-                            .read(radioProvider.notifier)
-                            .update((state) => 1),
+                for (final radioType in RadioType.values)
+                  Expanded(
+                    child: RadioWidget(
+                      categColor: radioType.getColor(),
+                      titleRadio: radioType.label,
+                      valueInput: radioType,
+                      onChangeValue:
+                          () => ref
+                              .read(radioProvider.notifier)
+                              .update((state) => radioType),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: RadioWidget(
-                    categColor: Colors.blue.shade700,
-                    titleRadio: 'WRK',
-                    valueInput: 2,
-                    onChangeValue:
-                        () => ref
-                            .read(radioProvider.notifier)
-                            .update((state) => 2),
-                  ),
-                ),
-                Expanded(
-                  child: RadioWidget(
-                    categColor: Colors.amberAccent.shade700,
-                    titleRadio: 'GEN',
-                    valueInput: 3,
-                    onChangeValue:
-                        () => ref
-                            .read(radioProvider.notifier)
-                            .update((state) => 3),
-                  ),
-                ),
               ],
             ),
           ),
@@ -192,20 +172,6 @@ class AddNewTaskModel extends ConsumerWidget {
                   ),
                   onPressed: () {
                     final getRadioValue = ref.read(radioProvider);
-                    String category = '';
-
-                    switch (getRadioValue) {
-                      case 1:
-                        category = 'Learning';
-                        break;
-                      case 2:
-                        category = 'Work';
-                        break;
-                      case 3:
-                        category = 'General';
-                        break;
-                      default:
-                    }
 
                     ref
                         .read(serviceProvider)
@@ -213,16 +179,19 @@ class AddNewTaskModel extends ConsumerWidget {
                           TodoModel(
                             titleTask: titleController.text,
                             description: descriptionController.text,
-                            category: category,
+                            category: getRadioValue.value,
                             dateTask: ref.read(dateProvider),
                             timeTask: ref.read(timeProvider),
+                            isDone: false,
                           ),
                         );
                     print('Data is saving');
 
                     titleController.clear();
                     descriptionController.clear();
-                    ref.read(radioProvider.notifier).update((state) => 0);
+                    ref
+                        .read(radioProvider.notifier)
+                        .update((state) => RadioType.learn);
                     ref.read(dateProvider.notifier).update((state) => '');
                     ref.read(timeProvider.notifier).update((state) => '');
                     print('Data is clear');
