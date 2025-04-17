@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/model/radio_type.dart';
 
-final radioProvider = StateProvider<int>((ref) {
-  return 0;
+final radioProvider = StateProvider<RadioType>((ref) {
+  return RadioType.learn;
 });

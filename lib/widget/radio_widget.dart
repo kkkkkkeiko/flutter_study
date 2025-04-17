@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/model/radio_type.dart';
 import 'package:flutter_study/provider/radio_provider.dart';
 
 class RadioWidget extends ConsumerWidget {
@@ -13,7 +14,7 @@ class RadioWidget extends ConsumerWidget {
 
   final String titleRadio;
   final Color categColor;
-  final int valueInput;
+  final RadioType valueInput;
   final VoidCallback onChangeValue;
 
   @override
