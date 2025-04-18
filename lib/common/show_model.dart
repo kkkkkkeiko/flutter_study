@@ -179,7 +179,7 @@ class AddNewTaskModel extends ConsumerWidget {
                           TodoModel(
                             titleTask: titleController.text,
                             description: descriptionController.text,
-                            category: getRadioValue.value,
+                            category: getRadioValue,
                             dateTask: ref.read(dateProvider),
                             timeTask: ref.read(timeProvider),
                             isDone: false,

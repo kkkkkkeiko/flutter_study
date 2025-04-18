@@ -27,7 +27,7 @@ class CardToDoListWidget extends ConsumerWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: .getColor(), //Colors.green,
+                    color: todoData[getIndex].category.getColor(),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       bottomLeft: Radius.circular(12),
@@ -78,13 +78,18 @@ class CardToDoListWidget extends ConsumerWidget {
                               activeColor: Colors.blue.shade700,
                               shape: const CircleBorder(),
                               value: todoData[getIndex].isDone,
-                              onChanged:
-                                  (value) => ref
-                                      .read(serviceProvider)
-                                      .updateTask(
-                                        todoData[getIndex].docID,
-                                        value!, //????????????? !いるの？いらんの？
-                                      ),
+                              onChanged: (value) {
+                                if (value == null) {
+                                  print('error');
+                                  return;
+                                }
+                                ref
+                                    .read(serviceProvider)
+                                    .updateTask(
+                                      todoData[getIndex].docID,
+                                      value,
+                                    );
+                              },
                             ),
                           ),
                         ),

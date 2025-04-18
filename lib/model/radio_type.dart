@@ -18,4 +18,17 @@ enum RadioType {
         return Colors.amberAccent.shade700;
     }
   }
+
+  static RadioType getRadioType(String value) {
+    switch (value) {
+      case 'learning':
+        return RadioType.learn;
+      case 'work':
+        return RadioType.work;
+      case 'general':
+        return RadioType.general;
+      default:
+        return RadioType.learn;
+    }
+  }
 }
